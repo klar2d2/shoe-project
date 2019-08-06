@@ -15,7 +15,7 @@ var config = {
 };
 
 var game = new Phaser.Game(config);
-var winArr = []
+var winArr = [false,false,false,false,false,false,false,false]
 
 function preload() {
   this.load.image('boot', 'images/boot.jpg')
@@ -135,7 +135,7 @@ let group = this.matter.world.nextGroup(true)
       .image(x, y, 'lace')
       .setBody(
         {type: 'rectangle'},
-        {collisionFilter: {group:group}, chamfer: 5, density: .005, frictionAir:0.05}
+        {collisionFilter: {group:group}, chamfer: 5, density: .005, frictionAir:0.05, label:'lace'}
       )
       .setScale(.05)
     }
@@ -156,16 +156,32 @@ let group = this.matter.world.nextGroup(true)
     })
   }
   this.matter.world.on('collisionstart', function (event, bodyA, bodyB){
-    if (bodyA.label === 'lace' && bodyB === zone1) {
-      console.log(bodyA.label, bodyB)
+    if (bodyB.label === 'lace' && bodyA.label === 'zone1') {
+      console.log('chill')
+      winArr[0] = true
     }
-    else if (bodyA === zone1 && bodyB.label === 'lace') {
-      console.log(bodyA, bodyB.label)
+    else if (bodyB.label === 'lace' && bodyA.label === 'zone2'){
+      winArr[1] = true
+    }
+    else if (bodyB.label === 'lace' && bodyA.label === 'zone3'){
+      winArr[2] = true
+    }
+    else if (bodyB.label === 'lace' && bodyA.label === 'zone4'){
+      winArr[3] = true
+    }
+    else if (bodyB.label === 'lace' && bodyA.label === 'zone5'){
+      winArr[4] = true
+    }
+    else if (bodyB.label === 'lace' && bodyA.label === 'zone6'){
+      winArr[5] = true
+    }
+    else if (bodyB.label === 'lace' && bodyA.label === 'zone7'){
+      winArr[6] = true
+    }
+    else if (bodyB.label === 'lace' && bodyA.label === 'zone8'){
+      winArr[7] = true
     }
   })
-  console.log(laces)
-  console.log(group)
-  console.log(newLace)
 }
 
 function update() {
