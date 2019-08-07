@@ -1,35 +1,53 @@
-var config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height: 600,
-    parent: 'game',
-    scene: {
-        preload: preload,
-        create: create,
-        physics: {
-          matter: {
-            debug: true
-          }
-        }
-    }
-};
-
-var game = new Phaser.Game(config);
+//let title = new Phaser.scene('Title');
 var winArr = [false,false,false,false,false,false,false,false]
 
-function preload() {
-  this.load.image('boot', 'images/boot.jpg')
-  this.load.image('lace', 'images/shoe-lace-chunk.png')
+
+
+class StartScene extends Phaser.Scene{
+  constructor() {
+    super()
+    // super({key: "StartScene"})
+    Phaser.Scene.call(this, {key: 'StartScene'})
+  }
+  preload() {
+    this.load.image('title', 'images/title.jpg');
+  }
+  create() {
+    var title = this.add.image(400, 200, 'title');
+    title.displayHeight = 800;
+    title.displayWidth = 800;
+    title.rotation = 1.5708;
+
+    this.add.text(50, 150, 'Oh no! Kobe cant lace his shoe in a freak bowling accident!', {fontFamily: 'Roboto Condensed', color: 'orange', fontSize:'24px', backgroundColor:'black'})
+    this.add.text(50, 250, 'Use the mouse to help him lace up his shoes!', {fontFamily: 'Roboto Condensed', color: 'orange', fontSize:'16px', backgroundColor:'black'})
+    this.add.text(50, 350, 'Click anywhere to begin', {fontFamily: 'Roboto Condensed', color: 'orange', fontSize:'36px', backgroundColor:'black'})
+
+    this.input.on('pointerdown', function(){
+      this.scene.start('GameScene')
+    }, this);
+  }
 }
 
-function create() {
-this.matter.world.setBounds();
 
-//background image
-// var boot = this.add.image(400, 420, 'boot');
-// boot.displayHeight = 1600;
-// boot.displayWidth = 1200;
-// boot.rotation = 1.5708;
+class GameScene extends Phaser.Scene{
+  constructor() {
+    super()
+    // super({key: 'GameScene'})
+    Phaser.Scene.call(this, {key: 'GameScene'})
+  }
+   preload() {
+    this.load.image('boot', 'images/boot.jpg')
+    this.load.image('lace', 'images/shoe-lace-chunk.png')
+  }
+
+ create() {
+  this.matter.world.setBounds();
+
+// background image
+var boot = this.add.image(400, 420, 'boot');
+boot.displayHeight = 1600;
+boot.displayWidth = 1200;
+boot.rotation = 1.5708;
 
 //Setting up zones in which I want to check if there are laces
 var zone1 = this.matter.add.rectangle(275, 370, 20, 80, {
@@ -96,7 +114,7 @@ this.matter.add.mouseSpring({});
 //setting up the holes via invis Walls
 let invisWall1 = this.matter.add.rectangle(275, 420, 20, 20,{
   isStatic: true,
-  debug: true
+  debug: true,
 });
 let invisWall2 = this.matter.add.rectangle(550, 420, 20, 20,{
   isStatic: true,
@@ -157,33 +175,76 @@ let group = this.matter.world.nextGroup(true)
   }
   this.matter.world.on('collisionstart', function (event, bodyA, bodyB){
     if (bodyB.label === 'lace' && bodyA.label === 'zone1') {
-      console.log('chill')
       winArr[0] = true
+      checkWin()
     }
     else if (bodyB.label === 'lace' && bodyA.label === 'zone2'){
       winArr[1] = true
+      checkWin()
     }
     else if (bodyB.label === 'lace' && bodyA.label === 'zone3'){
       winArr[2] = true
+      checkWin()
     }
     else if (bodyB.label === 'lace' && bodyA.label === 'zone4'){
       winArr[3] = true
+      checkWin()
     }
     else if (bodyB.label === 'lace' && bodyA.label === 'zone5'){
       winArr[4] = true
+      checkWin()
     }
     else if (bodyB.label === 'lace' && bodyA.label === 'zone6'){
       winArr[5] = true
+      checkWin()
     }
     else if (bodyB.label === 'lace' && bodyA.label === 'zone7'){
       winArr[6] = true
+      checkWin()
     }
     else if (bodyB.label === 'lace' && bodyA.label === 'zone8'){
       winArr[7] = true
+      checkWin()
     }
   })
+  function checkWin(){
+    if (winArr[0] === true && winArr[1] === true && winArr[2] === true && winArr[3] === true && winArr[4] === true && winArr[5] === true && winArr[6] === true && winArr[7] === true) {
+     game.scene.start('WinScene')
+    console.log('win')
+    }
+  }
+}
 }
 
-function update() {
+class WinScene extends Phaser.Scene{
+  constructor() {
+    super()
+    Phaser.Scene.call(this, {key:'WinScene'})
+  }
+  preload() {
 
+  }
+  create() {
+
+  }
 }
+
+
+
+var config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    parent: 'game',
+    physics: {
+        default: 'matter'
+        },
+    scene: [StartScene, GameScene, WinScene],
+    }
+var game = new Phaser.Game(config)
+
+game.scene.start('StartScene')
+
+// function startGame(){
+//   game.scene.start('GameScene')
+// }
