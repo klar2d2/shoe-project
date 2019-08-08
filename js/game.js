@@ -222,7 +222,7 @@ class WinScene extends Phaser.Scene{
   create() {
     this.add.text(350,300, 'Nicely done!', {fontFamily: 'Roboto Condensed', color: 'orange', fontSize:'24px', backgroundColor:'black'})
     this.input.on('pointerdown', function(){
-      game.scene.restart('StartScene')
+      location.reload(true)
     }, this);
   }
 }
