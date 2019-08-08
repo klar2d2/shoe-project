@@ -1,12 +1,8 @@
-//let title = new Phaser.scene('Title');
 var winArr = [false,false,false,false,false,false,false,false]
-
-
 
 class StartScene extends Phaser.Scene{
   constructor() {
     super()
-    // super({key: "StartScene"})
     Phaser.Scene.call(this, {key: 'StartScene'})
   }
   preload() {
@@ -32,7 +28,6 @@ class StartScene extends Phaser.Scene{
 class GameScene extends Phaser.Scene{
   constructor() {
     super()
-    // super({key: 'GameScene'})
     Phaser.Scene.call(this, {key: 'GameScene'})
   }
    preload() {
@@ -247,7 +242,3 @@ var config = {
 var game = new Phaser.Game(config)
 
 game.scene.start('StartScene')
-
-// function startGame(){
-//   game.scene.start('GameScene')
-// }
