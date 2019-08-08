@@ -18,7 +18,7 @@ class StartScene extends Phaser.Scene{
     title.displayWidth = 800;
     title.rotation = 1.5708;
 
-    this.add.text(50, 150, 'Oh no! Kobe cant lace his shoe in a freak bowling accident!', {fontFamily: 'Roboto Condensed', color: 'orange', fontSize:'24px', backgroundColor:'black'})
+    this.add.text(50, 150, 'Oh no! Kobe has his hands full of bowls!', {fontFamily: 'Roboto Condensed', color: 'orange', fontSize:'24px', backgroundColor:'black'})
     this.add.text(50, 250, 'Use the mouse to help him lace up his shoes!', {fontFamily: 'Roboto Condensed', color: 'orange', fontSize:'16px', backgroundColor:'black'})
     this.add.text(50, 350, 'Click anywhere to begin', {fontFamily: 'Roboto Condensed', color: 'orange', fontSize:'36px', backgroundColor:'black'})
 
@@ -225,7 +225,10 @@ class WinScene extends Phaser.Scene{
 
   }
   create() {
-
+    this.add.text(300,300, 'Nicely done!', {fontFamily: 'Roboto Condensed', color: 'orange', fontSize:'24px', backgroundColor:'black'})
+    this.input.on('pointerdown', function(){
+      game.scene.restart('StartScene')
+    }, this);
   }
 }
 
