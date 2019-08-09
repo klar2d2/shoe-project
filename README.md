@@ -1,5 +1,7 @@
 # Shoe Lace Simulator
 
+https://klar2d2.github.io/shoe-project/
+
 Shoe Lace Simulater is a game made with Jascript and Phaser.io. Use the mouse to attempt 
 to relace Kobe's shoe, as he can no longer do it.
 
